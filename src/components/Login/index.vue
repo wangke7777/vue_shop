@@ -3,7 +3,7 @@
     <div class="login_box">
       <!--头像区域-->
       <div class="avatar_box">
-        <img src="@/assets/logo.png" height="200" width="200" />
+        <img src="@/assets/logo.png" height="200" width="200" alt="logo"/>
       </div>
       <!-- 登录表单区-->
       <el-form
@@ -101,6 +101,7 @@ export default {
   height: 300px;
   background-color: #fff;
   border-radius: 3px;
+
   .avatar_box {
     position: absolute;
     left: 50%;
@@ -112,6 +113,7 @@ export default {
     border: 1px solid #eee;
     border-radius: 50%;
     box-shadow: 0 0 10px #ddd;
+
     img {
       width: 100%;
       height: 100%;
@@ -120,6 +122,7 @@ export default {
     }
   }
 }
+
 .login_form {
   position: absolute;
   bottom: 0;
@@ -127,6 +130,7 @@ export default {
   padding: 0 20px;
   box-sizing: border-box;
 }
+
 .btns {
   display: flex;
   justify-content: flex-end;
