@@ -71,6 +71,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="setRole(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -147,6 +148,34 @@
           <el-button type="primary" @click="editUserInfo">确 定</el-button>
         </span>
       </el-dialog>
+      <!--分配角色对话框-->
+      <el-dialog
+        title="分配角色"
+        :visible.sync="setRoleDialogVisible"
+        width="50%"
+        @close="setRoleDialogClosed"
+      >
+        <div>
+          <p>当前的用户：{{ userInfo.username }}</p>
+          <p>当前的角色：{{ userInfo.role_name }}</p>
+          <p>
+            分配新角色：
+            <el-select v-model="selectedRoleId" placeholder="请选择新角色">
+              <el-option
+                v-for="item in rolesList"
+                :key="item.id"
+                :label="item.roleName"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </p>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+        </span>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -172,7 +201,7 @@ export default {
       cb(new Error("请输入合法的手机号"));
     };
     return {
-      /*获取用户列表的参数对象*/
+      //获取用户列表的参数对象
       queryInfo: {
         query: "",
         pagenum: 1,
@@ -231,7 +260,15 @@ export default {
           { required: true, message: "请输入手机号码", trigger: "blur" },
           { validator: checkMobile, trigger: "blur" }
         ]
-      }
+      },
+      //分配角色对话框的显示和隐藏
+      setRoleDialogVisible: false,
+      //需要被分配角色的用户基本信息
+      userInfo: {},
+      //所有角色列表
+      rolesList: [],
+      //已选择的角色id值
+      selectedRoleId: ""
     };
   },
   created() {
@@ -250,7 +287,7 @@ export default {
       this.total = res.data.total;
       console.log(res);
     },
-    /*监听pegesize改变的事件*/
+    //监听pegesize改变的事件
     handleSizeChange(newSize) {
       console.log(newSize);
       this.queryInfo.pagesize = newSize;
@@ -357,6 +394,41 @@ export default {
       this.$message.success("删除成功!");
       await this.getUserList();
       console.log("已确认删除");
+    },
+    //分配角色
+    async setRole(userInfo) {
+      console.log(userInfo);
+      this.userInfo = userInfo;
+      //在展示对话框之前 获取所有角色列表
+      const { data: res } = await this.axios.get("roles");
+      if (res.meta.status !== 200) {
+        return this.$message.error("获取角色列表失败");
+      }
+      this.rolesList = res.data;
+      this.setRoleDialogVisible = true;
+    },
+    //将分配的角色提交到服务器
+    async saveRoleInfo() {
+      if (!this.selectedRoleId) {
+        return this.$message.error("请选择要分配的角色！");
+      }
+      const { data: res } = await this.axios.put(
+        `users/${this.userInfo.id}/role`,
+        {
+          rid: this.selectedRoleId
+        }
+      );
+      if (res.meta.status !== 200) {
+        console.log(res);
+        return this.$message.error("设置角色失败");
+      }
+      await this.getUserList();
+      this.$message.success(res.meta.msg);
+    },
+    //关闭对话框 重置对话框
+    setRoleDialogClosed() {
+      this.userInfo = {};
+      this.selectedRoleId = "";
     }
   }
 };
