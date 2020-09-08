@@ -113,10 +113,10 @@
             ></el-cascader>
           </el-form-item>
         </el-form>
-        <span slot="footer" class="dialog-footer"
-          ><el-button @click="addCateDialogVisible = false">取 消</el-button
-          ><el-button type="primary" @click="addCate">确 定</el-button></span
-        >
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="addCateDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addCate">确 定</el-button>
+        </span>
       </el-dialog>
       <!--编辑分类对话框-->
       <el-dialog title="修改分类" :visible.sync="editDialogVisible" width="50%">
