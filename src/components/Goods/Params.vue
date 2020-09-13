@@ -261,7 +261,7 @@ export default {
       addFormRules: {
         attr_name: [
           { required: true, message: "请输入参数名称", trigger: "blur" },
-          { min: 3, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" }
+          { min: 1, max: 10, message: "长度在 1 到 10 个字符", trigger: "blur" }
         ]
       },
       //控制修改对话框的显示与隐藏

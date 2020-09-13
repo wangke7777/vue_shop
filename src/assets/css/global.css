@@ -6,6 +6,7 @@ body,
   margin: 0;
   padding: 0;
   min-width: 1366px;
+  overflow: auto;
 }
 .el-breadcrumb {
   margin-bottom: 15px;
@@ -20,4 +21,16 @@ body,
 }
 .el-pagination {
   margin-top: 15px;
+}
+.el-steps {
+  margin: 15px 0;
+}
+.el-step__title {
+  font-size: 13px;
+}
+.el-checkbox {
+  margin: 0 5px 0 0 !important;
+}
+.ql-editor {
+  min-height: 300px !important;
 }
