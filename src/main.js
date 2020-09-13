@@ -5,18 +5,28 @@ import store from "./store";
 
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-
-import axios from "axios";
+Vue.use(ElementUI);
 
 import TreeTable from "vue-table-with-tree-grid";
 // 导入全局样式表
 import "./assets/css/global.css";
 import "./assets/font/iconfont.css";
 
-Vue.use(ElementUI);
+//导入nprogress对应的js和css
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+import axios from "axios";
 axios.defaults.baseURL = "http://timemeetyou.com:8889/api/private/v1/";
+//再request拦截器中展示进度条
 axios.interceptors.request.use(config => {
   config.headers.Authorization = window.sessionStorage.getItem("token");
+  NProgress.start();
+  return config;
+});
+//在response拦截器中隐藏进度条
+axios.interceptors.response.use(config => {
+  NProgress.done();
   return config;
 });
 Vue.prototype.axios = axios;
