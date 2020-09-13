@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: "Welcome"
+  name: "Welcome",
+  created() {
+    console.log("welcome");
+  }
 };
 </script>
 
