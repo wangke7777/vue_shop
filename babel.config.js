@@ -6,5 +6,5 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   presets: ["@vue/cli-plugin-babel/preset"],
   //发布产品时的插件数组
-  plugins: [...prodPlugins]
+  plugins: [...prodPlugins, "@babel/plugin-syntax-dynamic-import"]
 };
