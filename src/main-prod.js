@@ -15,7 +15,7 @@ import NProgress from "nprogress";
 import VueQuillEditor from 'vue-quill-editor'
 Vue.use(VueQuillEditor, /* { default global options } */)
 import axios from "axios";
-axios.defaults.baseURL = "http://timemeetyou.com:8889/api/private/v1/";
+axios.defaults.baseURL = "https://www.liulongbin.top:8888/api/private/v1/";
 //再request拦截器中展示进度条
 axios.interceptors.request.use(config => {
   config.headers.Authorization = window.sessionStorage.getItem("token");
